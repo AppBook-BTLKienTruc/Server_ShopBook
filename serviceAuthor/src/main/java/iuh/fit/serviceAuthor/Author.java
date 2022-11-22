@@ -18,8 +18,7 @@ import lombok.NoArgsConstructor;
 
 @SuppressWarnings("serial")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Entity
 @Table(name = "authors")
 public class Author implements Serializable {

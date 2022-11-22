@@ -1,8 +1,11 @@
-package iuh.fit.serviceBook;
+package iuh.fit.serviceBook.controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import iuh.fit.serviceBook.Book;
+import iuh.fit.serviceBook.BookService;
+
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/bookapi")
 public class BookController {
 
 	private BookService bookService;
@@ -30,13 +36,14 @@ public class BookController {
 	}
 	//
 	@GetMapping("")
-	public List<Book> findAll(){
+	public ResponseEntity<List<Book>> findAll(){
 		System.err.println("findAll()");
 		List<Book> list = bookService.findAll();
-		return list;
+		return ResponseEntity.ok(list);
 	}
 	//
 	@GetMapping("/{id}")
+	@Cacheable(value = "books",key = "#bookId",condition="#bookId!=null")
 	public Book findById(@PathVariable int id)
 	{
 		Book a = new Book(null);
@@ -56,7 +63,8 @@ public class BookController {
 	}
 
 	//
-	@PutMapping("")
+	@PutMapping("/{id}")
+	@CachePut(value = "books",key = "#bookId")
 	public Book updateEmployee(@RequestBody Book book) {
 		bookService.save(book);
 		return book;
@@ -79,6 +87,6 @@ public class BookController {
 		return "Deleted employee with id : " + id;
 
 	}
-	
+	 
 	
 }
