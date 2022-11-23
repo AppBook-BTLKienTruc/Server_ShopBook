@@ -16,4 +16,8 @@
 
 ![Không tồn tại](./AnhMinhHoa/img_book_gateway2.png)
 
+### Circuit Breaker
+
+![Không tồn tại](./AnhMinhHoa/img_book_circuitBreaker.png)
+
 
