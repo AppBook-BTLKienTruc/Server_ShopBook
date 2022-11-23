@@ -1,6 +1,8 @@
 # Server_ShopBook
 
-##### port: 88xx
+##### APIGATEWAY_PORT: 8803
+##### BOOKSERVICE_PORT: 8801
+##### AUHTORSERVICE_PORT: 8802
 
 ### Service Book (8801)
 
