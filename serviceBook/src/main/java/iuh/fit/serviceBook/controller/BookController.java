@@ -3,6 +3,7 @@ package iuh.fit.serviceBook.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ import iuh.fit.serviceBook.Book;
 import iuh.fit.serviceBook.BookService;
 
 @RestController
-@RequestMapping("/bookapi")
+@RequestMapping("/book")
 public class BookController {
 
 	private BookService bookService;
@@ -35,7 +36,7 @@ public class BookController {
 		return "my home";
 	}
 	//
-	@GetMapping("")
+	@GetMapping("/")
 	public ResponseEntity<List<Book>> findAll(){
 		System.err.println("findAll()");
 		List<Book> list = bookService.findAll();
@@ -57,22 +58,36 @@ public class BookController {
 	//
 	//
 	@PostMapping("")
-	public Book addEmployee(@RequestBody Book book) {
+	public Book addBook(@RequestBody Book book) {
 		bookService.save(book);
 		return book;
 	}
 
 	//
 	@PutMapping("/{id}")
-	@CachePut(value = "books",key = "#bookId")
-	public Book updateEmployee(@RequestBody Book book) {
-		bookService.save(book);
-		return book;
+	@CachePut(value = "books",key = "#bookId",condition="#bookId!=null")
+	public Book updateBook(@PathVariable int id, @RequestBody Book book) {
+		Book book2 = bookService.findById(id);
+		if(book2 != null) {
+			book2.setBookName(book.getBookName());
+			book2.setAuthor_id(book.getAuthor_id());
+			book2.setBookImage(book.getBookImage());
+			book2.setNumberOfPages(book.getNumberOfPages());
+			book2.setPrice(book.getPrice());
+			book2.setPublishDate(book.getPublishDate());
+			book2.setQuality(book.getQuality());
+			bookService.save(book2);
+		}else {
+			System.out.println("No have bookId:"+id);
+		}
+	
+		return book2;
 	}
 
 //
 	@DeleteMapping("/{id}")
-	public String deleteUser(@PathVariable int id) {
+	@CacheEvict(value = "books", allEntries = true)
+	public String deleteBook(@PathVariable int id) {
 
 		Book book = new Book(null);
 		try {
