@@ -48,3 +48,20 @@ resilience4j:
         permittedNumberOfCallsInHalfOpenState: 3
         slidingWindowSize: 10
         slidingWindowType: COUNT_BASED
+  retry:
+    retry-aspect-order: 2
+    instances:
+      serviceBook:
+        max-attempts: 3
+        wait-duration: 5s
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+        retry-exceptions:
+         - org.springframework.web.client.RestClientException
+      serviceAuthor:
+        max-attempts: 3
+        wait-duration: 5s
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+        retry-exceptions:
+         - org.springframework.web.client.RestClientException
