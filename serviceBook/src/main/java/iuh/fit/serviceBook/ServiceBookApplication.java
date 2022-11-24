@@ -12,7 +12,7 @@ import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 public class ServiceBookApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ServiceBookApplication.class, args);
+		SpringApplication.run(ServiceBookApplication.class, args); 
 	}
 	@Bean
 	@LoadBalanced
