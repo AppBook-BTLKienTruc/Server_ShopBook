@@ -1,0 +1,102 @@
+[33mcommit c47fc91ee3c30267b311a4fc28ef761d4e372469[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Viet Anh <vietanh6jk@gmail.com>
+Date:   Fri Nov 25 00:23:58 2022 +0700
+
+    fix circusbreaker to service
+
+[33mcommit 2eccd8502fba81f8d1875edb4fbb78a2e48e0405[m
+Merge: 7411f62 e85286c
+Author: Viet Anh <vietanh6jk@gmail.com>
+Date:   Fri Nov 25 00:16:24 2022 +0700
+
+    Merge branch 'main'
+
+[33mcommit 7411f6295c3605c5b2a2963c08bc14031a87e54b[m
+Author: Viet Anh <vietanh6jk@gmail.com>
+Date:   Fri Nov 25 00:05:51 2022 +0700
+
+    Fix Circusbreaker to Service
+
+[33mcommit e85286c4768757011122f9826a0ecf6cc7248beb[m
+Author: nguyenvangithub <81097647+nguyenvangithub@users.noreply.github.com>
+Date:   Wed Nov 23 23:29:48 2022 +0700
+
+    add retry
+
+[33mcommit 3aaeccbb6c360fc49d31381cad97dd14665db53b[m
+Author: nguyenvangithub <81097647+nguyenvangithub@users.noreply.github.com>
+Date:   Wed Nov 23 22:25:23 2022 +0700
+
+    update README
+
+[33mcommit 73eb72ce426ccd958af3a4fcda7b6133cf0ebb90[m
+Merge: db74c1a 1912c87
+Author: Nguyễn văn Hoàng <81097647+nguyenvangithub@users.noreply.github.com>
+Date:   Wed Nov 23 22:08:26 2022 +0700
+
+    Merge pull request #2 from Vietanh6jk/main
+    
+    finish redis-finish circusbreaker-finish service
+
+[33mcommit 1912c877504bfaf6981075c1c76b0f1784898ae0[m
+Author: Viet Anh <vietanh6jk@gmail.com>
+Date:   Wed Nov 23 21:31:37 2022 +0700
+
+    finish redis-finish circusbreaker-finish service
+
+[33mcommit db74c1aacaea7cf2bf7ce4f333a80b3e6ea07aa1[m
+Merge: 8f15c71 9099bf3
+Author: Nguyễn văn Hoàng <81097647+nguyenvangithub@users.noreply.github.com>
+Date:   Wed Nov 23 10:03:15 2022 +0700
+
+    Merge pull request #1 from Vietanh6jk/main
+    
+    V.Anh push : Redis book
+
+[33mcommit 9099bf3e18cee306be6e43ac8f008122cf708491[m
+Author: Viet Anh <vietanh6jk@gmail.com>
+Date:   Wed Nov 23 09:52:23 2022 +0700
+
+    finish redis sevicesBook(8801)
+
+[33mcommit 29fc7ae7769b84c4635854a09e0d2825f816d560[m
+Author: Viet Anh <vietanh6jk@gmail.com>
+Date:   Wed Nov 23 01:41:50 2022 +0700
+
+    finish redis-server
+
+[33mcommit 8f15c71e89a2504f64b6827d2b040ae5277af1cb[m[33m ([m[1;31mupstream/main[m[33m, [m[1;31mupstream/HEAD[m[33m)[m
+Author: nguyenvangithub <81097647+nguyenvangithub@users.noreply.github.com>
+Date:   Tue Nov 22 23:03:16 2022 +0700
+
+    finish gateway(8803) - serviceBook(8801) and serviceAuthor(8802)
+
+[33mcommit b36326378b63e2a2903314f5d1009154d89605e8[m
+Author: nguyenvangithub <81097647+nguyenvangithub@users.noreply.github.com>
+Date:   Tue Nov 22 22:54:42 2022 +0700
+
+    start app shop book Gateway
+
+[33mcommit f12e33bef624d361725b980b00bc3708831e20bf[m
+Author: nguyenvangithub <81097647+nguyenvangithub@users.noreply.github.com>
+Date:   Tue Nov 22 22:42:04 2022 +0700
+
+    finish service Author - port 8802
+
+[33mcommit 711e312a6f2b704c40c723cec015005b5ad1156b[m
+Author: nguyenvangithub <81097647+nguyenvangithub@users.noreply.github.com>
+Date:   Tue Nov 22 22:37:23 2022 +0700
+
+    start service Author
+
+[33mcommit 86d2c8ee5733439c207e7f9a94f9994b584e1cd3[m
+Author: nguyenvangithub <81097647+nguyenvangithub@users.noreply.github.com>
+Date:   Tue Nov 22 22:33:42 2022 +0700
+
+    add service cho class book - port 8801
+
+[33mcommit 95dbaa5c522fe4d03e667c882ed237fa073fa386[m
+Author: nguyenvangithub <81097647+nguyenvangithub@users.noreply.github.com>
+Date:   Tue Nov 22 22:23:19 2022 +0700
+
+    start BT - start service Book
