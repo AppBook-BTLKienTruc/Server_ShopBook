@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import iuh.fit.serviceBook.Book;
 import iuh.fit.serviceBook.BookService;
 
@@ -26,29 +28,31 @@ public class BookController {
 
 	private BookService bookService;
 
+	private static final String SERVICE_BOOK = "serviceBook";
 
 	@Autowired
 	public BookController(BookService bookService) {
 		this.bookService = bookService;
 	}
-	
+
 	//
 	@GetMapping("/home")
 	public String myhome() {
 		return "my home";
 	}
+
 	//
 	@GetMapping("/")
-	public ResponseEntity<List<Book>> findAll(){
+	public ResponseEntity<List<Book>> findAll() {
 		System.err.println("findAll()");
 		List<Book> list = bookService.findAll();
 		return ResponseEntity.ok(list);
 	}
+
 	//
 	@GetMapping("/{id}")
-	@Cacheable(value = "books",key = "#bookId",condition="#bookId!=null")
-	public Book findById(@PathVariable int id)
-	{
+	@Cacheable(value = "books", key = "#bookId", condition = "#bookId!=null")
+	public Book findById(@PathVariable int id) {
 		Book a = new Book(null);
 		try {
 			a = bookService.findById(id);
@@ -57,9 +61,12 @@ public class BookController {
 		}
 		return a;
 	}
+
 	//
 	//
 	@PostMapping("")
+	@CircuitBreaker(name = "serviceBook")
+	@Retry(name = "serviceBook", fallbackMethod = "defaultMessage")
 	public Book addBook(@RequestBody Book book) {
 		bookService.save(book);
 		return book;
@@ -67,10 +74,10 @@ public class BookController {
 
 	//
 	@PutMapping("/{id}")
-	@CachePut(value = "books",key = "#bookId",condition="#bookId!=null")
+	@CachePut(value = "books", key = "#bookId", condition = "#bookId!=null")
 	public Book updateBook(@PathVariable int id, @RequestBody Book book) {
 		Book book2 = bookService.findById(id);
-		if(book2 != null) {
+		if (book2 != null) {
 			book2.setBookName(book.getBookName());
 			book2.setAuthor_id(book.getAuthor_id());
 			book2.setBookImage(book.getBookImage());
@@ -79,10 +86,10 @@ public class BookController {
 			book2.setPublishDate(book.getPublishDate());
 			book2.setQuality(book.getQuality());
 			bookService.save(book2);
-		}else {
-			System.out.println("No have bookId:"+id);
+		} else {
+			System.out.println("No have bookId:" + id);
 		}
-	
+
 		return book2;
 	}
 
@@ -104,6 +111,19 @@ public class BookController {
 		return "Deleted employee with id : " + id;
 
 	}
-	 
-	
+	public String defaultMessage()
+    {
+        return "There were some error in connecting. Please try again later.";
+    }
+
+	//
+	@GetMapping("/delay")
+	public void SlowConnect() {
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

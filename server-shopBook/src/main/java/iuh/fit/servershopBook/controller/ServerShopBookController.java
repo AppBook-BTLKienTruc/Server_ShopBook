@@ -27,10 +27,6 @@ public class ServerShopBookController {
 //	public String serviceAFallback(Exception e) {
 //		return "This is a fallback method for serivice Book";
 //	}
-	 @GetMapping("/defaultFallback")
-	    public String defaultMessage()
-	    {
-	        return "There were some error in connecting. Please try again later.";
-	    }
+	    
 
 }

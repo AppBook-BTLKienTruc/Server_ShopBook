@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import iuh.fit.serviceAuthor.Author;
 import iuh.fit.serviceAuthor.AuthorService;
 
@@ -53,10 +55,16 @@ public class AuthorController {
 	//
 	//
 	@PostMapping("")
+	@CircuitBreaker(name = "serviceAuthor")
+	@Retry(name = "serviceAuthor", fallbackMethod = "defaultMessage")
 	public Author addAuthor(@RequestBody Author author) {
 		authorService.save(author);
 		return author;
 	}
+	public String defaultMessage()
+    {
+        return "There were some error in connecting. Please try again later.";
+    }
 
 	//
 	@PutMapping("/{id}")
