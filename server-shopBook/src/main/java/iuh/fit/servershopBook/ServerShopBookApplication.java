@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
+import io.github.resilience4j.ratelimiter.RateLimiterConfig;
 import io.github.resilience4j.timelimiter.TimeLimiterConfig;
 
 @SpringBootApplication
@@ -20,14 +21,7 @@ public class ServerShopBookApplication {
 	public RestTemplate restTemplate() {
 	    return new RestTemplate();
 	}
-	@Bean
-	public Customizer<ReactiveResilience4JCircuitBreakerFactory> customizer(){
-		return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
-				.circuitBreakerConfig(CircuitBreakerConfig.ofDefaults())
-				.timeLimiterConfig(TimeLimiterConfig.custom()
-						.timeoutDuration(Duration.ofSeconds(2)).build()).build()
-					);
-	}
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(ServerShopBookApplication.class, args);

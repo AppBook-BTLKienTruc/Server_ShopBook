@@ -14,6 +14,11 @@ spring:
           uri: http://localhost:8802
           predicates:
             - Path=/author/**
+  cache:
+    cache-names:
+    - rate-limit-buckets
+    caffeine:
+      spec: maximumSize=100000,expireAfterAccess=3600s
 management:
   health:
     circuitbreakers:
@@ -25,6 +30,10 @@ management:
   endpoint:
     health:
       show-details: always
+<<<<<<< HEAD
+
+    
+=======
 resilience4j:
   circuitbreaker:
     instances:
@@ -65,3 +74,4 @@ resilience4j:
         exponential-backoff-multiplier: 2
         retry-exceptions:
          - org.springframework.web.client.RestClientException
+>>>>>>> e85286c4768757011122f9826a0ecf6cc7248beb
