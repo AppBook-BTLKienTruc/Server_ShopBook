@@ -63,15 +63,11 @@
 			<artifactId>resilience4j-spring-boot2</artifactId>
 			<version>1.7.0</version>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-loadbalancer -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
 			<version>3.1.4</version>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-core -->
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-core</artifactId>

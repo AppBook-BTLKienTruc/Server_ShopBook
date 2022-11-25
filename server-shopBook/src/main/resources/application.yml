@@ -10,10 +10,43 @@ spring:
           uri: http://localhost:8801
           predicates:
             - Path=/book/**
+          filters:
+          - CircuitBreaker=serviceBook
+          - name: Retry
+            args:
+              retries: 5
+              statuses: BAD_GATEWAY
+              methods: GET
+              backoff:
+                firstBackoff: 10ms
+                maxBackoff: 50ms
+                factor: 2
+                basedOnPreviousValue: false
+          - name: RequestRateLimiter
+            args:
+              redis-rate-limiter.replenishRate: 10
+              redis-rate-limiter.burstCapacity: 20
         - id: serviceAuthor
           uri: http://localhost:8802
           predicates:
             - Path=/author/**
+          filters:
+          - CircuitBreaker=serviceAuthor
+          - name: Retry
+            args:
+              retries: 5
+              statuses: BAD_GATEWAY
+              methods: GET
+              backoff:
+                firstBackoff: 10ms
+                maxBackoff: 50ms
+                factor: 2
+                basedOnPreviousValue: false
+          - name: RequestRateLimiter
+            args:
+              redis-rate-limiter.replenishRate: 10
+              redis-rate-limiter.burstCapacity: 20
+
   cache:
     cache-names:
     - rate-limit-buckets
@@ -30,10 +63,6 @@ management:
   endpoint:
     health:
       show-details: always
-<<<<<<< HEAD
-
-    
-=======
 resilience4j:
   circuitbreaker:
     instances:
@@ -46,7 +75,7 @@ resilience4j:
         waitDurationInOpenState: 5s
         permittedNumberOfCallsInHalfOpenState: 3
         slidingWindowSize: 10
-        slidingWindowType: COUNT_BASED
+        slidingWindowType: COUNT_BASED 
       serviceAuthor:
         registerHealthIndicator: true
         eventConsumerBufferSize: 10
@@ -56,7 +85,7 @@ resilience4j:
         waitDurationInOpenState: 5s
         permittedNumberOfCallsInHalfOpenState: 3
         slidingWindowSize: 10
-        slidingWindowType: COUNT_BASED
+        slidingWindowType: COUNT_BASED   
   retry:
     retry-aspect-order: 2
     instances:
@@ -73,5 +102,8 @@ resilience4j:
         enable-exponential-backoff: true
         exponential-backoff-multiplier: 2
         retry-exceptions:
-         - org.springframework.web.client.RestClientException
->>>>>>> e85286c4768757011122f9826a0ecf6cc7248beb
+         - org.springframework.web.client.RestClientException 
+
+  
+     
+
