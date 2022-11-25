@@ -1,11 +1,14 @@
 package iuh.fit.serviceBook.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
@@ -24,14 +29,30 @@ import iuh.fit.serviceBook.BookService;
 @RestController
 @RequestMapping("/book")
 public class BookController {
-
+	
+	@Autowired
 	private BookService bookService;
-
+	@Autowired
+	@Lazy
+	private RestTemplate restTemplate;
+	@Autowired
 	private static final String SERVICE_BOOK = "serviceBook";
+	@Autowired
+	private static final String BASEURL ="http://localhost:8802/author";
+	
+	
 
 	@Autowired
 	public BookController(BookService bookService) {
 		this.bookService = bookService;
+	}
+	
+	@GetMapping("/displayAuthor")
+	@CircuitBreaker(name = SERVICE_BOOK)
+	@Retry(name = SERVICE_BOOK)
+	public List<Object[]> displayAuthor (@RequestBody String authorId){
+		String url = authorId == null ? BASEURL : BASEURL + "/"+ authorId;
+		return restTemplate.getForObject(url,ArrayList.class);
 	}
 
 	//
@@ -44,6 +65,7 @@ public class BookController {
 	@GetMapping("/")
 	public ResponseEntity<List<Book>> findAll() {
 		System.err.println("findAll()");
+		System.out.println(new Date());
 		List<Book> list = bookService.findAll();
 		return ResponseEntity.ok(list);
 	}
@@ -110,10 +132,7 @@ public class BookController {
 		return "Deleted employee with id : " + id;
 
 	}
-	public String defaultMessage()
-    {
-        return "There were some error in connecting. Please try again later.";
-    }
+	
 
 	//
 	@GetMapping("/delay")

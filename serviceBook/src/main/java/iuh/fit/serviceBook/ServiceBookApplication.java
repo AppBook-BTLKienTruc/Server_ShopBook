@@ -19,5 +19,9 @@ public class ServiceBookApplication {
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
+	public String defaultMessage()
+    {
+        return "There were some error in connecting. Please try again later.";
+    }
 
 }

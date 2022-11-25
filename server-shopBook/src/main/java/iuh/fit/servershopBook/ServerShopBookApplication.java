@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.circuitbreaker.resilience4j.ReactiveResilience4JCircuitBreakerFactory;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JConfigBuilder;
 import org.springframework.cloud.client.circuitbreaker.Customizer;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,6 +19,7 @@ import io.github.resilience4j.timelimiter.TimeLimiterConfig;
 public class ServerShopBookApplication {
 	
 	@Bean
+	@LoadBalanced
 	public RestTemplate restTemplate() {
 	    return new RestTemplate();
 	}
@@ -26,5 +28,10 @@ public class ServerShopBookApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ServerShopBookApplication.class, args);
 	}
+	public String defaultMessage()
+    {
+        return "There were some error in connecting. Please try again later.";
+    }
+
 
 }
